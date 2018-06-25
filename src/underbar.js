@@ -91,7 +91,6 @@
         filteredArray.push(val);
       }
     });
-
     return filteredArray;
   };
 
@@ -99,6 +98,10 @@
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+    let negateTest = (value, key, arr) => {
+      return !test(value, key, arr);
+    };
+    return _.filter(collection, negateTest);
   };
 
   // Produce a duplicate-free version of the array.
