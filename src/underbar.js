@@ -107,25 +107,27 @@
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
     // Reaaaally stuck on how to use the iterator here
-    let uniqueArray = [];
+    let result = [];
+    let transformed = [];
+    let found;
 
     if (isSorted) {
-      for (const value of array) {
-        if (value !== uniqueArray[uniqueArray.length - 1]) {
-          uniqueArray.push(value);
+      _.each(array, (element) => {
+        if(_.indexOf(transformed, iterator(element)) === -1) {
+          transformed.push(iterator(element));
+          result.push(element);
         }
-      }
+      });
+    } else {
+      _.each(array, function(element) {
+        found = _.indexOf(result, element);
+        if (found === -1) {
+          result.push(element);
+        }
+      });
     }
 
-    else {
-      for (const value of array) {
-        if (!uniqueArray.includes(value)) {
-          uniqueArray.push(value);
-        }
-      }
-    }
-
-    return uniqueArray;
+    return result;
   };
 
 
