@@ -178,11 +178,15 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
+    // Tests if there is an accumulator provided
+    // If none is provided, this variable will be used
+    // To skip the first value when iterating our collection
     let hadNoAccumulator = false;
     if (accumulator === undefined) {
       accumulator = collection[0];
       hadNoAccumulator = true;
     }
+    // Creates an array of values depending on if an object was passed
     let values;
     if (Array.isArray(collection)) {
       values = collection;
@@ -190,7 +194,8 @@
     else if(typeof collection === 'object') {
       values = Object.values(collection);
     }
-
+    // Iterates through the array of values using the iterator function
+    // To modify the accumulator
     for (const value of values) {
       // Skip first item if no accumulator is given
       if (hadNoAccumulator) hadNoAccumulator = false;
@@ -223,7 +228,7 @@
       
     }
 
-    return _.reduce(collection, iterator, false);
+    return _.reduce(collection, iterator, true);
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
