@@ -183,8 +183,15 @@
       accumulator = collection[0];
       hadNoAccumulator = true;
     }
+    let values;
+    if (Array.isArray(collection)) {
+      values = collection;
+    } 
+    else if(typeof collection === 'object') {
+      values = Object.values(collection);
+    }
 
-    for (const value of collection) {
+    for (const value of values) {
       // Skip first item if no accumulator is given
       if (hadNoAccumulator) hadNoAccumulator = false;
       else {
@@ -205,21 +212,17 @@
       }
       return item === target;
     };
-    // If it's an array, pass it the collection
-    if (Array.isArray(collection)) {
       return _.reduce(collection, wasFound, false);
-    }
-    // If it's an object, get the values from the collection:
-    else if (typeof collection === 'object') {
-      let collectionValues = Object.values(collection);
-      return _.reduce(collectionValues, wasFound, false);
-    }
   };
 
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
+    if (iterator === undefined) {
+      
+    }
+
     return _.reduce(collection, iterator, false);
   };
 
