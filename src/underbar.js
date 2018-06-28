@@ -217,18 +217,24 @@
       }
       return item === target;
     };
-      return _.reduce(collection, wasFound, false);
+    return _.reduce(collection, wasFound, false);
   };
 
 
   // Determine whether all of the elements match a truth test.
+  // CHALLENGE: Reuse reduce()
   _.every = function(collection, iterator) {
-    // TIP: Try re-using reduce() here.
+    // CASE: No iterator passed
+    // Returns itself
     if (iterator === undefined) {
-      
+      iterator = _.identity;
     }
 
-    return _.reduce(collection, iterator, true);
+    let callback = function(accumulator, value) {
+      return Boolean(iterator(value)) === accumulator;
+    };
+
+    return _.reduce(collection, callback, true);
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
